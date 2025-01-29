@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 12",
+	"properties": {
+		"content": {
+			"query": "-- drop EXTERNAL table test;\n-- drop EXTERNAL file format SynapseDelimitedTextFormat;\n-- drop EXTERNAL data SOURCE rawdata_storageblocks_dfs_core_windows_net;\n\n\nIF NOT EXISTS (SELECT * FROM sys.external_file_formats WHERE name = 'SynapseDelimitedTextFormat') \n\tCREATE EXTERNAL FILE FORMAT [SynapseDelimitedTextFormat] \n\tWITH ( FORMAT_TYPE = DELIMITEDTEXT ,\n\t       FORMAT_OPTIONS (\n\t\t\t FIELD_TERMINATOR = ',',\n\t\t\t FIRST_ROW = 1\n\t\t\t))\nGO\n\nIF NOT EXISTS (SELECT * FROM sys.external_data_sources WHERE name = 'rawdata_storageblocks_dfs_core_windows_net') \n\tCREATE EXTERNAL DATA SOURCE [rawdata_storageblocks_dfs_core_windows_net] \n\tWITH (\n\t\tLOCATION = 'abfss://rawdata@storageblocks.dfs.core.windows.net' \n\t)\nGO\n\nCREATE EXTERNAL TABLE dbo.test (\n\t[Plant] bigint,\n\t[Material] bigint,\n\t[Region] nvarchar(4000),\n\t[Value] float,\n\t[Currency] nvarchar(4000),\n\t[Quantity] float,\n\t[Unit of Measure] nvarchar(4000)\n\t)\n\tWITH (\n\tLOCATION = 'assignment/inventory.csv',\n\tDATA_SOURCE = [rawdata_storageblocks_dfs_core_windows_net],\n\tFILE_FORMAT = [SynapseDelimitedTextFormat]\n\t)\nGO\n\n\nSELECT TOP 100 * FROM dbo.test\nGO",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "customers",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

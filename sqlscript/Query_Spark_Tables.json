@@ -1,0 +1,17 @@
+{
+	"name": "Query_Spark_Tables",
+	"properties": {
+		"content": {
+			"query": "-- SELECT TOP (100) [EmployeeID]\n-- ,[EmployeeName]\n-- ,[EmployeeStartDate]\n--  FROM [mytestdb].[dbo].[myparquettable]\n\n\nSELECT EmployeeID FROM mytestdb.dbo.myParquetTable\nWHERE EmployeeName = 'Alice';",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "mytestdb",
+				"poolName": "Built-in"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
